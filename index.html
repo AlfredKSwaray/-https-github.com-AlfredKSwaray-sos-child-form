@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SOS CHILD SAFEGUIDING FORM</title>
   <style>
     body {
@@ -54,7 +54,7 @@
     <p>The SOS Child Safeguarding Form is a structured reporting tool designed to ensure the protection, safety, and well-being of children and young people affiliated with SOS Children’s Villages or related institutions.</p>
 
     <h2>REPORTER INFORMATION</h2>
-    <form>
+    <form id="sosForm" name="sosForm" method="POST" action="https://script.google.com/macros/s/AKfycbyb8jkC7rnOszpeGc_5ukoGhGIlRNP60nNhjlm8b8YPgLZ1IVlvh8eTXnUO--CleXZx/exec">
       <label for="firstName">First Name *</label>
       <input type="text" id="firstName" name="firstName" required>
 
@@ -64,8 +64,8 @@
       <label for="gender">Gender *</label>
       <select id="gender" name="gender" required>
         <option value="">Select Gender</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
+        <option>Male</option>
+        <option>Female</option>
       </select>
 
       <label for="city">City *</label>
@@ -96,8 +96,8 @@
       <label for="childGender">Gender *</label>
       <select id="childGender" name="childGender" required>
         <option value="">Select Gender</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
+        <option>Male</option>
+        <option>Female</option>
       </select>
 
       <label for="dob">Date of Birth *</label>
@@ -126,9 +126,9 @@
       <label for="disability">Disability (if any) *</label>
       <select id="disability" name="disability" required>
         <option value="">Select</option>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-        <option value="Other">Other</option>
+        <option>Yes</option>
+        <option>No</option>
+        <option>Other</option>
       </select>
 
       <label for="school">School/University *</label>
@@ -159,12 +159,28 @@
       <button type="submit">Submit</button>
     </form>
   </div>
+
   <script>
-    const form = document.querySelector('form');
-    form.addEventListener('submit', function (e) {
+    const form = document.getElementById("sosForm");
+    form.addEventListener("submit", e => {
       e.preventDefault();
-      alert('Submitted Successfully!');
-      form.reset();
+      const data = new FormData(form);
+      fetch(form.action, {
+        method: "POST",
+        body: data,
+      })
+      .then(response => {
+        if (response.ok) {
+          alert("Form submitted successfully!");
+          form.reset();
+        } else {
+          alert("Submission failed. Please try again.");
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        alert("An error occurred. Please check your connection and try again.");
+      });
     });
   </script>
 </body>
